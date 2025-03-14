@@ -3,14 +3,10 @@ var router = express.Router();
 let productSchema = require('../schema/products');
 const e = require('express');
 
-
-/* GET users listing. */
 router.get('/', async function(req, res, next) {
     let products = await productSchema.find();
     res.send(products);
 });
-
-
 router.post('/', async function(req, res, next) {
     try {
         let body = req.body;
@@ -36,11 +32,9 @@ router.post('/', async function(req, res, next) {
     }
 });
 
-/* GET users listing. */
 router.get('/:id', async function(req, res, next) {
     try {
         let product = await productSchema.findById(req.params.id);
-        //let product = await productSchema.findOne({_id: req.params.id});
         res.send({
             success: true,
             data: product
@@ -52,7 +46,6 @@ router.get('/:id', async function(req, res, next) {
         })
     }
 });
-
 router.put('/:id', async function(req, res, next) {
     try {
         let body = req.body;
@@ -79,11 +72,10 @@ router.put('/:id', async function(req, res, next) {
         })
     }
 });
-
 router.delete('/:id', async function(req, res, next) {
     let body = req.body;
     let updateOBje = {}
-    if (body.isDeleted) 
+    
         updateOBje.isDeleted = true;
     let updateproduct = await productSchema.findByIdAndUpdate(req.params.id, updateOBje, {new: true});
     res.send({
@@ -91,5 +83,4 @@ router.delete('/:id', async function(req, res, next) {
         data: updateproduct
     });
 });
-
 module.exports = router;

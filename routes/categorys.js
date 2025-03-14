@@ -2,15 +2,10 @@ var express = require('express');
 var router = express.Router();
 let categorySchema = require('../schema/categorys');
 const e = require('express');
-
-
-/* GET users listing. */
 router.get('/', async function(req, res, next) {
     let categorys = await categorySchema.find();
     res.send(categorys);
 });
-
-
 router.post('/', async function(req, res, next) {
     try {
         let body = req.body;
@@ -31,8 +26,6 @@ router.post('/', async function(req, res, next) {
         })
     }
 });
-
-/* GET users listing. */
 router.get('/:id', async function(req, res, next) {
     try {
         let category = await categorySchema.findById(req.params.id);
@@ -48,7 +41,6 @@ router.get('/:id', async function(req, res, next) {
         })
     }
 });
-
 router.put('/:id', async function(req, res, next) {
     try {
         let body = req.body;
@@ -67,11 +59,10 @@ router.put('/:id', async function(req, res, next) {
         })
     }
 });
-
 router.delete('/:id', async function(req, res, next) {
     let body = req.body;
     let updateOBje = {}
-    if (body.isDeleted) 
+    
         updateOBje.isDeleted = true;
     let updatecategory = await categorySchema.findByIdAndUpdate(req.params.id, updateOBje, {new: true});
     res.send({
@@ -79,5 +70,4 @@ router.delete('/:id', async function(req, res, next) {
         data: updatecategory
     });
 });
-
 module.exports = router;
